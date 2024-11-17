@@ -1,0 +1,66 @@
+{
+  "name": "code-comment-lm",
+  "version": "0.9.0",
+  "type": "module",
+  "main": "dist/lib/index.js",
+  "bin": {
+    "code-comment-lm": "dist/bin/code-comment-lm.js"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "keywords": [],
+  "author": "tettzlab",
+  "license": "MIT",
+  "description": "A CLI tool leveraging LLMs to manipulate code comments (currently supporting only Java comment translation).",
+  "scripts": {
+    "all": "npm run rebuild && npm run start",
+    "build": "npm run tsc && npm run test",
+    "bundle": "npm run bundle:dev && npm run bundle:min",
+    "bundle:dev": "node esbuild.js",
+    "bundle:min": "MINIFY=true node esbuild.js",
+    "clean": "rimraf dist bundle",
+    "dev": "node --loader ts-node/esm bin/code-comment-lm.ts",
+    "format": "prettier --config=./.prettierrc.json --write .",
+    "lint:fix": "eslint bin lib test --fix",
+    "lint": "eslint bin lib test",
+    "node": "node --loader ts-node/esm",
+    "rebuild": "npm run clean && npm run format && npm run build && npm run bundle",
+    "rename": "node --loader ts-node/esm bin/rename.ts dist",
+    "start": "node dist/bin/code-comment-lm.js Test.java",
+    "test": "npm run typecheck && npm run lint && vitest --run",
+    "tsc": "tsc --skipLibCheck",
+    "typecheck": "tsc --skipLibCheck --noEmit",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@commander-js/extra-typings": "^12.1.0",
+    "@eslint/js": "9.14.0",
+    "@types/node": "22.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.14.0",
+    "@typescript-eslint/parser": "^8.14.0",
+    "esbuild": "^0.24.0",
+    "eslint": "9.14.0",
+    "eslint-import-resolver-node": "^0.3.9",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.12.0",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "8.14.0",
+    "vitest": "^2.1.4"
+  },
+  "dependencies": {
+    "@instructor-ai/instructor": "^1.5.0",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "java-parser": "^2.3.2",
+    "openai": "^4.72.0",
+    "ts-retry-promise": "^0.8.1",
+    "zod": "^3.23.8"
+  }
+}
